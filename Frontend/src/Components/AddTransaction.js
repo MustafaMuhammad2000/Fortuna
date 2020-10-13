@@ -27,7 +27,7 @@ export const AddTransaction = () => {
     const newTransaction = {
       id: uuid(),
       text,
-      amount: parseInt(amount),
+      amount: parseFloat(amount),
       category,
     };
     addTransaction(newTransaction);
@@ -69,7 +69,7 @@ export const AddTransaction = () => {
               <option value="DEFAULT" disabled>
                 Select your category
               </option>
-              <option value="Food">Food</option>
+              <option value="Food and drinks">Food and drinks</option>
               <option value="Travel">Travel</option>
               <option value="Clothes or accessories">
                 Clothes or accessories

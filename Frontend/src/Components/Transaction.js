@@ -1,22 +1,23 @@
 import React, { useContext } from "react";
 import { TransactionContext } from "../Context/TransactionState";
+
 export const Transaction = (props) => {
   const { deleteTransaction } = useContext(TransactionContext);
+
   function categoryCSS() {
-    if (props.transaction.category == "Food") {
+    if (props.transaction.category === "Food and drinks") {
       return "Food";
-      console.log(props.transport.category);
-    } else if (props.transaction.category == "Travel") {
+    } else if (props.transaction.category === "Travel") {
       return "Travel";
-    } else if (props.transaction.category == "Clothes or accessories ") {
+    } else if (props.transaction.category === "Clothes or accessories ") {
       return "Clothes or accessories";
-    } else if (props.transaction.category == "Subscriptions") {
+    } else if (props.transaction.category === "Subscriptions") {
       return "Subscriptions";
-    } else if (props.transaction.category == "Rent") {
+    } else if (props.transaction.category === "Rent") {
       return "Rent";
-    } else if (props.transaction.category == "Technology") {
+    } else if (props.transaction.category === "Technology") {
       return "Technology";
-    } else if (props.transaction.category == "Other") {
+    } else if (props.transaction.category === "Other") {
       return "Other";
     }
   }
