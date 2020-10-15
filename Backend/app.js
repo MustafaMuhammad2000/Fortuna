@@ -16,7 +16,7 @@ app.use((req, res, next) => {
       'Access-Control-Allow-Headers',
       'Origin, X-Requested-With, Content-Type, Accept, Authorization'
     );
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
     next();
   });
 
@@ -35,7 +35,7 @@ app.use((error, req, res, next) => {
     res.json({message: error.message || 'An unknown error occurred!'});
 });
 
-mongoose.connect("mongodb+srv://<User>:<Password>@fortuna.puonu.mongodb.net/mern?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect("mongodb+srv://minotaurman:spongebob20@fortuna.puonu.mongodb.net/mern?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true})
         .then(() => {
             console.log("Connected to database succesfully!")
             app.listen(5000);

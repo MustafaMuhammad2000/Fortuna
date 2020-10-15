@@ -3,7 +3,7 @@ import { TransactionContext } from "../Context/TransactionState";
 import uuid from "react-uuid";
 
 export const AddTransaction = () => {
-  const [text, setText] = useState("");
+  const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("DEFAULT");
   const [displayErrors, setdisplayErrors] = useState();
@@ -26,12 +26,12 @@ export const AddTransaction = () => {
 
     const newTransaction = {
       id: uuid(),
-      text,
+      description,
       amount: parseFloat(amount),
       category,
     };
     addTransaction(newTransaction);
-    setText("");
+    setDescription("");
     setAmount("");
     setCategory("DEFAULT");
     setdisplayErrors(false);
@@ -50,8 +50,8 @@ export const AddTransaction = () => {
             Enter Description
             <input
               type="text"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               placeholder="E.g Uber ride"
               required
             />

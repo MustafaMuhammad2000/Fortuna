@@ -1,4 +1,5 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useContext } from "react";
+import { AuthContext} from "./auth-context"
 import TransactionReducer from "./TransactionReducer";
 
 const initialState = {
@@ -10,25 +11,107 @@ export const TransactionContext = createContext(initialState);
 
 //Provider, wraps around all of app.js so children component can access context
 export const TransactionProvider = ({ children }) => {
+  const auth = useContext(AuthContext);
   const [state, dispatch] = useReducer(TransactionReducer, initialState);
 
   //Actions- Calls to reducer
-  function deleteTransaction(id) {
-    dispatch({
-      type: "DELETE_EXPENSE",
-      payload: id,
-    });
+
+  async function getTransactions(){
+    try{
+      const response = await fetch('http://localhost:5000/api/transactions/all' , {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+           'Authorization' : 'Bearer '+auth.token
+        },
+        body: JSON.stringify({
+          creator: auth.userId
+        })
+      })
+      const responseData = await response.json();
+      if(!response.ok){
+        throw new Error(responseData.message);
+      }
+      console.log(responseData);
+      dispatch({
+        type: 'GET_TRANSACTIONS',
+        payload: responseData.transactions
+      });
+    } catch (error) {
+      console.log(error)
+      dispatch({
+        type: 'TRANSACTION_ERROR',
+        payload: error.message
+      })
+    }
   }
-  function addTransaction(transaction) {
-    dispatch({
-      type: "ADD_EXPENSE",
-      payload: transaction,
-    });
+  async function deleteTransaction(id) {
+    try{
+      const response = await fetch('http://localhost:5000/api/transactions/' , {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer '+auth.token
+        },
+        body: JSON.stringify({
+          transactionId: String(id)
+        })
+      })
+      const responseData = await response.json();
+      if(!response.ok){
+        throw new Error(responseData.message);
+      }
+      console.log(responseData);
+      dispatch({
+        type: 'DELETE_TRANSACTION',
+        payload: id
+      });
+    } catch (error) {
+      console.log(error)
+      dispatch({
+        type: 'TRANSACTION_ERROR',
+        payload: error.message
+      })
+    }
+  }
+  async function addTransaction(transaction) {
+    try{
+      const response = await fetch('http://localhost:5000/api/transactions' , {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+           'Authorization' : 'Bearer '+auth.token
+        },
+        body: JSON.stringify({
+          id: transaction.id,
+          description: transaction.description,
+          amount: transaction.amount,
+          category: transaction.category,
+          creator : auth.userId
+        })
+      })
+      const responseData = await response.json();
+      if(!response.ok){
+        throw new Error(responseData.message);
+      }
+      console.log(responseData);
+      dispatch({
+        type: 'ADD_TRANSACTION',
+        payload: transaction
+      });
+    } catch (error) {
+      console.log(error)
+      dispatch({
+        type: 'TRANSACTION_ERROR',
+        payload: error.message
+      })
+    }
   }
   return (
     <TransactionContext.Provider
       value={{
         transactions: state.transactions,
+        getTransactions,
         deleteTransaction,
         addTransaction,
       }}

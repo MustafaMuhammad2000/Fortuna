@@ -31,11 +31,10 @@ export const Login = () => {
               throw new Error(responseData.message);
             }
             console.log(responseData);
-            console.log("Sign up worked");
             setUsername("");
             setPassword("");
             setdisplayErrors(false);
-            auth.login();
+            auth.login(responseData.userId, responseData.token);
         } catch (error) {
             console.log(error);
 

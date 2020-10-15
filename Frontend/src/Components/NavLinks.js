@@ -8,12 +8,12 @@ export const NavLinks = () => {
     <ul>
         {auth.isLoggedIn && (
         <li>
-          <NavLink to="/u1/transactions">My Transactions </NavLink>
+          <NavLink to="/transactions">My Transactions </NavLink>
         </li>
         )}
         {auth.isLoggedIn && (
         <li>
-          <NavLink to="/u1/report">Generate Report </NavLink>
+          <NavLink to="/report">Generate Report </NavLink>
         </li>
         )}
         {!auth.isLoggedIn && (

@@ -44,7 +44,7 @@ export const Register = () => {
           setPassword("");
           setConfirmPassword("")
           setdisplayErrors(false);
-          auth.login();
+          auth.login(responseData.userId, responseData.token);
         } catch (error) {
           console.log(error);
           setError(error.message)

@@ -7,11 +7,11 @@ const User = require('../models/user_schema');
 
 
 const getTransactions = async (req, res, next) => {
-    const userId = req.body.user;
-    console.log(userId);
+    const { creator } = req.body;
+    console.log("USER ID IS: "+creator);
     let userWithTransactions;
   try {
-    userWithTransactions = await User.findById(userId).populate('transactions');
+    userWithTransactions = await User.findById(creator).populate('transactions');
   } catch (err) {
     const error = new HttpError(
       'Fetching places failed, please try again later',
@@ -19,9 +19,9 @@ const getTransactions = async (req, res, next) => {
     );
     return next(error);
   }
-  if (!userWithTransactions || userWithTransactions.transactions.length === 0) {
+  if (!userWithTransactions) {
     return next(
-      new HttpError('Could not find places for the provided user id.', 404)
+      new HttpError('Could not find transactions for the provided user id.', 404)
     );
   }
 
@@ -39,14 +39,13 @@ const addTransaction = async (req,res,next) =>{
         description,
         amount,
         category,
-        creator,
+        creator
     });
-
     let user;
     try {
       user = await User.findById(creator);
     } catch (err) {
-      const error = new HttpError('Creating place failed, please try again', 500);
+      const error = new HttpError('Find by ID did not work, please try again', 500);
       return next(error);
     }
   
@@ -55,35 +54,40 @@ const addTransaction = async (req,res,next) =>{
       return next(error);
     }
 
-    console.log(user);
+    if(user.id != req.userData.userId){
+      const error = new HttpError('Authorization failed, could not delete this transaction.', 401);
+      return next(error);
+    }
+
+
 
     try {
         const sess = await mongoose.startSession();
         sess.startTransaction();
         await createdTransaction.save({ session: sess });
-        user.transactions.push(createdPlace);
+        user.transactions.push(createdTransaction);
         await user.save({ session: sess });
         await sess.commitTransaction();
       } catch (err) {
+        console.log(err);
         const error = new HttpError(
-          'Creating place failed, please try again.',
+          'Creating transaction failed , please try again.',
           500
         );
         return next(error);
     };
-    res.status(201).json({ place: createdPlace });
+    res.status(201).json({ message: 'Added Transaction', transaction: createdTransaction });
 };
 
 const deleteTransaction = async (req,res,next) => {
-    const transactionId = req.body.id;
-    console.log(transactionId);
+    const transactionId = req.body.transactionId;
 
     let transaction;
     try {
-      transaction = await Transaction.findById(transactionId).populate('creator');
+      transaction = await Transaction.findOne({ id : transactionId }).populate('creator');
     } catch (err) {
       const error = new HttpError(
-        'Something went wrong, could not delete place.',
+        'Something went wrong, could find transaction to delete.',
         500
       );
       return next(error);
@@ -93,16 +97,22 @@ const deleteTransaction = async (req,res,next) => {
         return next(error);
       }
 
+      if(transaction.creator.id != req.userData.userId){
+        const error = new HttpError('Authorization failed, could not delete this transaction.', 401);
+        return next(error);
+      }
+
       try {
         const sess = await mongoose.startSession();
         sess.startTransaction();
-        await transaction.remove({ session: sess });
-        transaction.creator.transactions.pull(place);
-        await transaction.creator.save({ session: sess });
+        await transaction.remove({session: sess});
+        transaction.creator.transactions.pull(transaction);
+        await transaction.creator.save({session: sess});
         await sess.commitTransaction();
       } catch (err) {
+        console.log(err);
         const error = new HttpError(
-          'Something went wrong, could not delete place.',
+          'Something went wrong, could not delete Transaction.',
           500
         );
         return next(error);

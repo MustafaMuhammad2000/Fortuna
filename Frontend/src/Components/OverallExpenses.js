@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { TransactionContext } from "../Context/TransactionState";
+
 export const OverallExpenses = () => {
   const context = useContext(TransactionContext);
   const values = context.transactions.map((transaction) => transaction.amount);

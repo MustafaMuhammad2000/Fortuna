@@ -24,7 +24,7 @@ export const Transaction = (props) => {
   return (
     <li>
       <div className={categoryCSS()}>{props.transaction.category}</div>
-      <span>{props.transaction.text} </span>
+      <span>{props.transaction.description} </span>
       <span>${props.transaction.amount}</span>
       <button
         className="deletebutton"
