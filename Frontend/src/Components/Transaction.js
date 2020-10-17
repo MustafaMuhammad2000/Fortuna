@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
+import moment from 'moment';
 import { TransactionContext } from "../Context/TransactionState";
+
 
 export const Transaction = (props) => {
   const { deleteTransaction } = useContext(TransactionContext);
@@ -26,6 +28,7 @@ export const Transaction = (props) => {
       <div className={categoryCSS()}>{props.transaction.category}</div>
       <span>{props.transaction.description} </span>
       <span>${props.transaction.amount}</span>
+      <span>{moment(props.transaction.date).format('DD MMM, YYYY')}</span>
       <button
         className="deletebutton"
         onClick={() => deleteTransaction(props.transaction.id)}

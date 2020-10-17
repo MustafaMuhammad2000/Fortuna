@@ -11,8 +11,10 @@ import { NavBar } from "./Components/NavBar";
 import { Landing } from "./Pages/Landing";
 import { Transactions } from "./Pages/Transactions";
 import { LoginPage } from "./Pages/LoginPage"
+import { ReportPage } from "./Pages/ReportPage"
 import {RegisterPage} from "./Pages/RegisterPage"
 import {AuthContext} from './Context/auth-context'
+import { TransactionProvider } from "./Context/TransactionState";
 
 let logoutTimer;
 const App = () => {
@@ -66,6 +68,9 @@ const App = () => {
       <Route path="/transactions" exact>
           <Transactions />
       </Route>
+      <Route path="/report" exact>
+          <ReportPage />
+      </Route>
       <Redirect to="/" />
     </React.Fragment>
     );
@@ -88,12 +93,14 @@ const App = () => {
   // Double ! on token converts it to boolean, return's token truthy value
   return (
     <AuthContext.Provider value={{isLoggedIn: !!token, token: token, userId: userId, login:login, logout: logout}}>
+      <TransactionProvider>
       <Router>
         <NavBar />
         <Switch>
           {routes}
         </Switch> 
       </Router>
+     </TransactionProvider>
     </AuthContext.Provider>
   );
 }

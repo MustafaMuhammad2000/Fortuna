@@ -19,14 +19,11 @@ export const TransactionProvider = ({ children }) => {
   async function getTransactions(){
     try{
       const response = await fetch('http://localhost:5000/api/transactions/all' , {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
            'Authorization' : 'Bearer '+auth.token
         },
-        body: JSON.stringify({
-          creator: auth.userId
-        })
       })
       const responseData = await response.json();
       if(!response.ok){
@@ -87,7 +84,7 @@ export const TransactionProvider = ({ children }) => {
           description: transaction.description,
           amount: transaction.amount,
           category: transaction.category,
-          creator : auth.userId
+          date: transaction.date,
         })
       })
       const responseData = await response.json();

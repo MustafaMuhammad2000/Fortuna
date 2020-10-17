@@ -7,14 +7,12 @@ const User = require('../models/user_schema');
 
 
 const getTransactions = async (req, res, next) => {
-    const { creator } = req.body;
-    console.log("USER ID IS: "+creator);
     let userWithTransactions;
   try {
-    userWithTransactions = await User.findById(creator).populate('transactions');
+    userWithTransactions = await User.findById(req.userData.userId).populate('transactions');
   } catch (err) {
     const error = new HttpError(
-      'Fetching places failed, please try again later',
+      'Fetching transactions failed, please try again later',
       500
     );
     return next(error);
@@ -33,29 +31,31 @@ const getTransactions = async (req, res, next) => {
 };
 
 const addTransaction = async (req,res,next) =>{
-    const {id, description, amount, category, creator} = req.body;
+    const {id, description, amount, category, date} = req.body;
+    console.log(req.body);
     const createdTransaction = new Transaction({
         id,
         description,
         amount,
         category,
-        creator
+        date,
+        creator: req.userData.userId
     });
     let user;
     try {
-      user = await User.findById(creator);
+      user = await User.findById(req.userData.userId);
     } catch (err) {
       const error = new HttpError('Find by ID did not work, please try again', 500);
       return next(error);
     }
   
     if (!user) {
-      const error = new HttpError('Could not find user for provided id', 404);
+      const error = new HttpError('Could not find user for selected transaction', 404);
       return next(error);
     }
 
     if(user.id != req.userData.userId){
-      const error = new HttpError('Authorization failed, could not delete this transaction.', 401);
+      const error = new HttpError('Authorization failed, could not create this transaction.', 401);
       return next(error);
     }
 
@@ -93,7 +93,7 @@ const deleteTransaction = async (req,res,next) => {
       return next(error);
     }
     if (!transaction) {
-        const error = new HttpError('Could not find place for this id.', 404);
+        const error = new HttpError('Could not find transaction for this id.', 404);
         return next(error);
       }
 
