@@ -24,9 +24,17 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     width: '35ch',
+    height: 60
   },
   button: {
-    width: '35ch'
+    width: '40ch',
+    background: 'linear-gradient(45deg, #00cb98 42%, #00d4ff 97%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   }
 }));
 
@@ -95,18 +103,20 @@ export const Register = () => {
         onSubmit={onSubmit}
       >
           <div>
-          <FormControl required error={displayErrors} className={clsx(classes.margin, classes.textField)} variant="filled">
+          <FormControl required error={displayErrors} className={clsx(classes.margin)} variant="filled">
           <InputLabel htmlFor="filled-adornment-username">Username</InputLabel>
           <FilledInput
             id="filled-adornment-username"
+            className={classes.textField}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </FormControl>
-        <FormControl required error={displayErrors} className={clsx(classes.margin, classes.textField)} variant="filled">
+        <FormControl required error={displayErrors} className={clsx(classes.margin)} variant="filled">
           <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
           <FilledInput
             id="filled-adornment-password"
+            className={classes.textField}
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -143,8 +153,8 @@ export const Register = () => {
             }
           />
         </FormControl>
-        <FormControl fullWidth className={clsx(classes.margin, classes.button)} >
-          <Button type="submit" variant="contained" color="primary" >Create Account</Button>  
+        <FormControl fullWidth className={clsx(classes.margin)} >
+          <Button type="submit" variant="contained" color="primary" className={classes.button} >Create Account</Button>  
         </FormControl> 
         </div>    
         </form>

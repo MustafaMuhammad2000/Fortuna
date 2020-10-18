@@ -18,7 +18,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    width: '100ch'
+    width: '100ch',
+    '& label.Mui-focused': {
+      borderBottomColor: 'green',
+      color: 'green',
+    },
   },
   margin: {
     margin: theme.spacing(1),
@@ -33,7 +37,14 @@ const useStyles = makeStyles((theme) => ({
     width: '35ch'
   },
   button:{
-    width: '72ch'
+    width: '83ch',
+    background: '#00cb98',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   }
 }));
 
@@ -88,23 +99,25 @@ export const AddTransaction = () => {
           onSubmit={onSubmit}
       >
       <div>
-      <FormControl required error={displayErrors} className={clsx(classes.margin, classes.textField)} variant="filled">
+      <FormControl required error={displayErrors} className={clsx(classes.margin)} variant="filled">
           <InputLabel htmlFor="filled-adornment-description">Enter Description</InputLabel>
           <FilledInput
             id="filled-adornment-description"
+            className={classes.textField}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            inputProps={{style: {fontSize: 23.5}}} // font size of input text
-            InputLabelProps={{style: {fontSize: 23.5}}} // font size of input label
+            // inputProps={{style: {fontSize: 23.5}}} // font size of input text
+            // InputLabelProps={{style: {fontSize: 23.5}}} // font size of input label
           />
         <FormHelperText id="description-helper-text">E.g Uber Ride</FormHelperText>
       </FormControl>
-      <FormControl required error={displayErrors} className={clsx(classes.margin, classes.select)} variant="filled">
+      <FormControl required error={displayErrors} className={clsx(classes.margin)} variant="filled">
           <InputLabel shrink id="demo-simple-select-placeholder-label-category">
             Category
           </InputLabel>
           <Select
             labelId="demo-simple-select-placeholder-label-category"
+            className={classes.select}
             id="demo-simple-select-placeholder-category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -118,23 +131,25 @@ export const AddTransaction = () => {
             <MenuItem value={"Other"}>Other</MenuItem>
           </Select>
       </FormControl>
-      <FormControl  required error={displayErrors} className={clsx(classes.margin, classes.textField)} variant="filled">
+      <FormControl  required error={displayErrors} className={clsx(classes.margin)} variant="filled">
           <InputLabel htmlFor="filled-adornment-amount">Enter Amount</InputLabel>
           <FilledInput
             id="filled-adornment-amount"
+            className={classes.textField}
             label="number"
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
-            inputProps={{style: {fontSize: 23.5}}} // font size of input text
-            InputLabelProps={{style: {fontSize: 23.5}}} // font size of input label
+            // inputProps={{style: {fontSize: 23.5}}} // font size of input text
+            // InputLabelProps={{style: {fontSize: 23.5}}} // font size of input label
           />
-          <FormHelperText id="description-helper-text">E.g $17.32</FormHelperText>
+          <FormHelperText id="description-helper-text">E.g 17.32</FormHelperText>
       </FormControl>
-      <FormControl required error={displayErrors} className={clsx(classes.margin, classes.date)} variant="filled">
+      <FormControl required error={displayErrors} className={clsx(classes.margin)} variant="filled">
         <FilledInput
               id="filled-adornment-date"
+              className={classes.date}
               label="date"
               type="date"
               value={date}
@@ -143,8 +158,8 @@ export const AddTransaction = () => {
             />
         <FormHelperText id="description-helper-text">E.g 2020-10-16</FormHelperText>
       </FormControl>
-      <FormControl fullWidth className={clsx(classes.margin, classes.button)} >
-          <Button type="submit" variant="contained" color="primary" >Add Transaction</Button>  
+      <FormControl fullWidth className={clsx(classes.margin)} >
+          <Button className={classes.button} type="submit" variant="contained" color="Primary" >Add Transaction</Button>  
       </FormControl> 
         </div>
       </form>

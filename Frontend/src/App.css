@@ -2,18 +2,9 @@ body {
   background-color: ffffff;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  min-height: 75vh; /* To change min height */
+  align-items: center;
   font-family: Arial, Helvetica, sans-serif;
-}
-
-NavBar {
-  top: 0;
-  z-index: 100;
-  position: fixed;
-  width: 100%;
-  color: White;
 }
 
 h1 {
@@ -40,76 +31,7 @@ h4 {
   box-shadow: 2px 2px 3px 4px #ccc; /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
   padding: 20px;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: center;
   margin: 20px 0;
-}
-
-input[type="text"],
-input[type="number"] {
-  border: 2px solid #dedede;
-  border-radius: 2px;
-  display: block;
-  font-size: 16px;
-  padding: 12px;
-  width: 100%;
-}
-
-select {
-  border: 2px solid #dedede;
-  border-radius: 2px;
-  display: block;
-  font-size: 16px;
-  padding: 10px;
-  width: 110%;
-}
-
-.button {
-  cursor: pointer;
-  background-color: #1938c2;
-  box-shadow: var(--box-shadow);
-  color: #fff;
-  border: 0;
-  display: block;
-  font-size: 16px;
-  margin: 10px 0 30px;
-  padding: 10px;
-  width: 110%;
-}
-.ulist {
-  list-style-type: none;
-  padding: 0;
-  margin-bottom: 40px;
-}
-
-.ulist li {
-  background-color: #fff;
-  box-shadow: var(--box-shadow);
-  color: #333;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  padding: 10px;
-  margin: 5px 0;
-  width: 100%;
-}
-.Food {
-  background-color: #8fbc8f;
-}
-.Travel {
-  background-color: #00ced1;
-}
-.Clothes {
-  background-color: #ffd700;
-}
-.Subscriptions {
-  background-color: #e6e6fa;
-}
-.Rent {
-  background-color: #ffa07a;
-}
-.Technology {
-  background-color: #663399;
-}
-.Other {
-  background-color: #f0f8ff;
 }

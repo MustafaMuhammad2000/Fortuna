@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DataGrid } from '@material-ui/data-grid';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import moment from 'moment';
 import { TransactionContext } from "../Context/TransactionState";
-import { Transaction } from "./Transaction";
 
 
 export const ListofTransactions = () => {
@@ -32,23 +32,30 @@ export const ListofTransactions = () => {
   return (
     <React.Fragment>
       <h3>Expense History</h3>
-      <div style={{height: 300, width: '100%'}}>
+      <div style={{height: 325, width: '100%'}}>
         <DataGrid
         columns={[ { field: 'category', width:185 }, { field: 'description', width:200 }, { field: 'amount', width:100 }, { field: 'date', type: 'date', width:300 }]}
         rows={
               transactions
           }
+        alignItems="flex-start"
         autoPageSize
         checkboxSelection
         onSelectionChange={handleRowSelection}
-        />
+        />  
+        <div style={{
+          display: 'flex',
+        alignItems: 'center'
+      }}>
       <Button 
         variant="contained" 
         color="secondary" 
         onClick={deleteSelected}
-        style={{display: ((selectRows.length === 0) ? 'none' : 'block') }} >
+        style={{display: ((selectRows.length === 0) ? 'none' : 'block'), width: "50%"}} 
+        startIcon={<DeleteIcon />} >
         Delete Selected Expenses
       </Button>  
+      </div>
       </div>
     </React.Fragment>
   );

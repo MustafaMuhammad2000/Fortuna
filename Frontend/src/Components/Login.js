@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
 import FilledInput from '@material-ui/core/FilledInput';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -17,16 +18,28 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    width: '35ch'
+    width: '35ch',
+    '& label.Mui-focused': {
+      borderBottomColor: 'green',
+      color: 'green',
+    },
   },
   margin: {
     margin: theme.spacing(1),
   },
   textField: {
     width: '35ch',
+    height: 60,
   },
   button: {
-    width: '35ch'
+    width: '40ch',
+    background: 'linear-gradient(45deg, #00cb98 42%, #00d4ff 97%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   }
 }));
 
@@ -90,19 +103,21 @@ export const Login = () => {
         onSubmit={onSubmit}
       >
           <div>
-        <FormControl required error={displayErrors} className={clsx(classes.margin, classes.textField)} variant="filled">
+        <FormControl required error={displayErrors} className={clsx(classes.margin)} variant="filled">
           <InputLabel htmlFor="filled-adornment-username">Username</InputLabel>
           <FilledInput
             id="filled-adornment-username"
+            className={classes.textField}
             type='text'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </FormControl>
-        <FormControl required error={displayErrors} className={clsx(classes.margin, classes.textField)} variant="filled">
+        <FormControl required error={displayErrors} className={clsx(classes.margin)} variant="filled">
           <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
           <FilledInput
             id="filled-adornment-password"
+            className={classes.textField}
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -119,8 +134,8 @@ export const Login = () => {
             }
           />
         </FormControl>
-        <FormControl fullWidth className={clsx(classes.margin, classes.button)} >
-          <Button type="submit" variant="contained" color="primary" >Login</Button>  
+        <FormControl fullWidth className={clsx(classes.margin)} >
+          <Button type="submit" variant="contained" color="primary" className={classes.button} >Login</Button>  
         </FormControl> 
         </div>    
         </form>
