@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react'
 import clsx from 'clsx';
+import { useSnackbar } from 'notistack';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import FilledInput from '@material-ui/core/FilledInput';
@@ -46,6 +47,7 @@ export const Register = () => {
     const [confirmpassword, setConfirmPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false);
     const [displayErrors, setdisplayErrors] = useState(false);
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     
     const handleClickShowPassword = () => {
@@ -60,9 +62,12 @@ export const Register = () => {
         }
         if(password !== confirmpassword){
             setdisplayErrors(true)
-            setUsername("");
             setPassword("");
             setConfirmPassword("");
+            enqueueSnackbar('Passwords do not match', {
+              variant: 'error',
+              autoHideDuration: 2000,
+            });
             return
         }
         try{
@@ -82,13 +87,20 @@ export const Register = () => {
             throw new Error(responseData.message);
           }
           console.log(responseData);
-          console.log("Sign up worked");
           setUsername("");
           setPassword("");
           setConfirmPassword("")
           setdisplayErrors(false);
+          enqueueSnackbar(responseData.message, {
+            variant: 'success',
+            autoHideDuration: 2000,
+          });
           auth.login(responseData.userId, responseData.token);
         } catch (error) {
+          enqueueSnackbar(error.message, {
+            variant: 'error',
+            autoHideDuration: 2000,
+          });
           console.log(error);
         }
       };

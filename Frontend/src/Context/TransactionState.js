@@ -1,4 +1,6 @@
 import React, { createContext, useReducer, useContext } from "react";
+import { useSnackbar } from 'notistack';
+
 import { AuthContext} from "./auth-context"
 import TransactionReducer from "./TransactionReducer";
 
@@ -11,6 +13,7 @@ export const TransactionContext = createContext(initialState);
 
 //Provider, wraps around all of app.js so children component can access context
 export const TransactionProvider = ({ children }) => {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const auth = useContext(AuthContext);
   const [state, dispatch] = useReducer(TransactionReducer, initialState);
 
@@ -36,6 +39,10 @@ export const TransactionProvider = ({ children }) => {
       });
     } catch (error) {
       console.log(error)
+      enqueueSnackbar(error.message, {
+        variant: 'error',
+        autoHideDuration: 2000,
+      });
       dispatch({
         type: 'TRANSACTION_ERROR',
         payload: error.message
@@ -59,12 +66,20 @@ export const TransactionProvider = ({ children }) => {
         throw new Error(responseData.message);
       }
       console.log(responseData);
+      enqueueSnackbar(responseData.message, {
+        variant: 'success',
+        autoHideDuration: 2000,
+      });
       dispatch({
         type: 'DELETE_TRANSACTION',
         payload: id
       });
     } catch (error) {
       console.log(error)
+      enqueueSnackbar(error.message, {
+        variant: 'error',
+        autoHideDuration: 2000,
+      });
       dispatch({
         type: 'TRANSACTION_ERROR',
         payload: error.message
@@ -92,12 +107,20 @@ export const TransactionProvider = ({ children }) => {
         throw new Error(responseData.message);
       }
       console.log(responseData);
+      enqueueSnackbar(responseData.message, {
+        variant: 'success',
+        autoHideDuration: 2000,
+      });
       dispatch({
         type: 'ADD_TRANSACTION',
         payload: transaction
       });
     } catch (error) {
       console.log(error)
+      enqueueSnackbar(error.message, {
+        variant: 'error',
+        autoHideDuration: 2000,
+      });
       dispatch({
         type: 'TRANSACTION_ERROR',
         payload: error.message

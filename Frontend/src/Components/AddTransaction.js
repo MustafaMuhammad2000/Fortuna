@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    width: '100ch',
+    width: "50%",
     '& label.Mui-focused': {
       borderBottomColor: 'green',
       color: 'green',
@@ -28,16 +28,15 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
   textField: {
-    width: '35ch',
+    width: "30ch"
   },
   select: {
-    width: '35ch',
+    width: "30ch"
   },
   date: {
-    width: '35ch'
+    width: "30ch"
   },
   button:{
-    width: '83ch',
     background: '#00cb98',
     borderRadius: 3,
     border: 0,
@@ -98,7 +97,7 @@ export const AddTransaction = () => {
           autoComplete="off"
           onSubmit={onSubmit}
       >
-      <div>
+      <div style={{ width: '100%'}}>
       <FormControl required error={displayErrors} className={clsx(classes.margin)} variant="filled">
           <InputLabel htmlFor="filled-adornment-description">Enter Description</InputLabel>
           <FilledInput
@@ -122,12 +121,13 @@ export const AddTransaction = () => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            <MenuItem value={"Food and drinks"}>Food and drinks</MenuItem>
+            <MenuItem value={"Food and Drinks"}>Food and Drinks</MenuItem>
             <MenuItem value={"Travel"}>Travel</MenuItem>
-            <MenuItem value={"Clothes or accessories"}>Clothes or accessories</MenuItem>
+            <MenuItem value={"Shopping"}>Shopping</MenuItem>
             <MenuItem value={"Subscriptions"}>Subscriptions</MenuItem>
-            <MenuItem value={"Rent"}>Rent</MenuItem>
-            <MenuItem value={"Technology"}>Technology</MenuItem>
+            <MenuItem value={"Housing and Utilties"}>Housing and Utilties</MenuItem>
+            <MenuItem value={"Entertainment"}>Entertainment </MenuItem>
+            <MenuItem value={"Health and Wellness"}>Health and Wellness</MenuItem>
             <MenuItem value={"Other"}>Other</MenuItem>
           </Select>
       </FormControl>
@@ -159,7 +159,7 @@ export const AddTransaction = () => {
         <FormHelperText id="description-helper-text">E.g 2020-10-16</FormHelperText>
       </FormControl>
       <FormControl fullWidth className={clsx(classes.margin)} >
-          <Button className={classes.button} type="submit" variant="contained" color="Primary" >Add Transaction</Button>  
+          <Button className={classes.button} type="submit" variant="contained" color="primary" >Add Transaction</Button>  
       </FormControl> 
         </div>
       </form>

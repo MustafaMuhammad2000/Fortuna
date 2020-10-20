@@ -5,13 +5,15 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
-
 import "./App.css";
+import { SnackbarProvider } from 'notistack';
+
 import { NavBar } from "./Components/NavBar";
 import { Landing } from "./Pages/Landing";
 import { Transactions } from "./Pages/Transactions";
 import { LoginPage } from "./Pages/LoginPage"
 import { ReportPage } from "./Pages/ReportPage"
+import { MonthPage } from "./Pages/MonthPage"
 import {RegisterPage} from "./Pages/RegisterPage"
 import {AuthContext} from './Context/auth-context'
 import { TransactionProvider } from "./Context/TransactionState";
@@ -71,6 +73,9 @@ const App = () => {
       <Route path="/report" exact>
           <ReportPage />
       </Route>
+      <Route path="/month" exact>
+          <MonthPage />
+      </Route>
       <Redirect to="/" />
     </React.Fragment>
     );
@@ -93,6 +98,7 @@ const App = () => {
   // Double ! on token converts it to boolean, return's token truthy value
   return (
     <AuthContext.Provider value={{isLoggedIn: !!token, token: token, userId: userId, login:login, logout: logout}}>
+      <SnackbarProvider maxSnack={3} preventDuplicate>
       <TransactionProvider>
       <Router>
         <NavBar />
@@ -101,6 +107,7 @@ const App = () => {
         </Switch> 
       </Router>
      </TransactionProvider>
+     </SnackbarProvider>
     </AuthContext.Provider>
   );
 }

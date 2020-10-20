@@ -119,7 +119,6 @@ const signup = async (req, res, next) => {
       );
       return next(error);
     }
-    
     res.json({message: 'Logged in!', userId: existingUser.id, token: token});
   };
 

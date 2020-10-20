@@ -1,9 +1,5 @@
 body {
   background-color: ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -24,6 +20,12 @@ h4 {
   text-transform: uppercase;
 }
 
+.test {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .inc-exp-container {
   background-color: #fff;
   -webkit-box-shadow: 2px 2px 3px 4px #ccc; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */

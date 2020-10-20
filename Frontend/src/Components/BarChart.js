@@ -1,5 +1,6 @@
 import React,{useContext} from 'react'
 import{ BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, } from 'recharts';
+
 import { TransactionContext } from "../Context/TransactionState";
 export const BarCh = () => {
     const context = useContext(TransactionContext);
@@ -28,8 +29,8 @@ export const BarCh = () => {
     return (
         <React.Fragment>
         <h3>Monthly Expenditure</h3>
-        <BarChart width={730} height={250} data={sumAmounts}>
-            <CartesianGrid strokeDasharray="3 3" />
+        <BarChart width={750} height={350} data={sumAmounts}>
+            <CartesianGrid strokeDasharray="4 4" />
             <XAxis dataKey="yearmonth" />
             <YAxis />
             <Tooltip />

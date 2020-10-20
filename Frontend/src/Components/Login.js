@@ -1,4 +1,5 @@
 import React, {useState, useContext} from 'react'
+import { useSnackbar } from 'notistack';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -49,7 +50,8 @@ export const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [displayErrors, setdisplayErrors] = useState();
+    const [displayErrors, setdisplayErrors] = useState(false);
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     
 
@@ -85,8 +87,16 @@ export const Login = () => {
             setUsername("");
             setPassword("");
             setdisplayErrors(false);
+            enqueueSnackbar(responseData.message, {
+              variant: 'success',
+              autoHideDuration: 2000,
+            });
             auth.login(responseData.userId, responseData.token);
         } catch (error) {
+            enqueueSnackbar(error.message, {
+              variant: 'error',
+              autoHideDuration: 2000,
+            });
             console.log(error);
 
         }

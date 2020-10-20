@@ -12,8 +12,10 @@ export const ReportPage = () => {
 
     return (
         <React.Fragment>
-        <PieCh />
-        <BarCh />
+            <div className="test">
+                <PieCh />
+                <BarCh />
+            </div>
         </React.Fragment>
     )
 }

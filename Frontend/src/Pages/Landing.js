@@ -5,7 +5,9 @@ import { Title } from "../Components/Title";
 export const Landing = () => {
   return (
     <React.Fragment>
-      <Title />
+       <div className="test">
+          <Title />
+      </div>
     </React.Fragment>
   );
 };

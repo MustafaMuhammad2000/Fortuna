@@ -5,7 +5,9 @@ import {Register} from '../Components/Register'
 export const RegisterPage = () => {
     return (
         <React.Fragment>
-            <Register />
+            <div className="test">
+                <Register />
+            </div>
         </React.Fragment>  
     )
 }

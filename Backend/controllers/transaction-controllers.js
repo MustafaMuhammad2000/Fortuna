@@ -71,7 +71,7 @@ const addTransaction = async (req,res,next) =>{
       } catch (err) {
         console.log(err);
         const error = new HttpError(
-          'Creating transaction failed , please try again.',
+          'Creating transaction failed, please try again.',
           500
         );
         return next(error);
@@ -117,7 +117,7 @@ const deleteTransaction = async (req,res,next) => {
         );
         return next(error);
       }
-    res.status(200).json({ message: 'Deleted place.' });  
+    res.status(200).json({ message: 'Deleted Transaction.' });  
 };
 
 exports.getTransactions = getTransactions;

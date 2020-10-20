@@ -4,7 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
-import { NavLinks } from "./NavLinks";
 
 import {AuthContext} from '../Context/auth-context'
 const useStyles = makeStyles((theme) => ({
@@ -27,34 +26,37 @@ export const NavBar = () => {
   return (
     <React.Fragment>
       <div className={classes.root}>
-        <AppBar position="static" style={{background: '#00cb98' /*'linear-gradient(45deg, #00cb98 42%, #00d4ff 97%)' */}}>
+        <AppBar position="static" style={{background: '#00cb98'}}>
           <Toolbar>
-            <Button className={classes.menuButton}>
             <Link to="/" style={{color: 'white', textDecoration: 'none'}}>Fortuna</Link>
-            </Button>
             <section className={classes.rightToolbar}>
                 {!auth.isLoggedIn &&
-                (<Button>
-                <Link to="/login" style={{color: 'white', textDecoration: 'none'}}>Login</Link>
-                </Button>)
+                (
+                <Link to="/login" style={{color: 'white', textDecoration: 'none',  marginRight: 15}}>Login</Link>
+                )
                 }
                 {!auth.isLoggedIn &&
-                (<Button>
-                <Link to="/register" style={{color: 'white', textDecoration: 'none'}}>Create Account</Link>
-                </Button>)
+                (
+                <Link to="/register" style={{color: 'white', textDecoration: 'none',  marginRight: 15}}>Create Account</Link>
+                )
                 }
                 {auth.isLoggedIn &&
-                (<Button>
-                <Link to="/transactions" style={{color: 'white', textDecoration: 'none'}}>My Transactions</Link>
-                </Button>)
+                (
+                <Link to="/transactions" style={{color: 'white', textDecoration: 'none', marginRight: 15}}>My Transactions</Link>
+                )
                 }
                 {auth.isLoggedIn &&
-                (<Button>
-                <Link to="/report" style={{color: 'white', textDecoration: 'none'}}>Generate Report</Link>
-                </Button>)
+                (
+                <Link to="/month" style={{color: 'white', textDecoration: 'none', marginRight: 15}}>Month at a Glance</Link>
+                )
                 }
                 {auth.isLoggedIn &&
-                (<Button onClick={auth.logout} style={{color:'white'}}>
+                (
+                <Link to="/report" style={{color: 'white', textDecoration: 'none', marginRight: 25}}>Generate Report</Link>
+                )
+                }
+                {auth.isLoggedIn &&
+                (<Button onClick={auth.logout}  variant="contained" color="secondary" style={{color:'white'}}>
                   Logout
                 </Button>)
                 }
@@ -62,13 +64,6 @@ export const NavBar = () => {
           </Toolbar>
         </AppBar>
       </div>
-      
-      {/* <nav className="NavBar">
-        <Link to="/">Fortuna</Link>
-        <nav>
-          <NavLinks />
-        </nav>
-      </nav> */}
 
     </React.Fragment>
   );
