@@ -20,31 +20,34 @@ import { TransactionProvider } from "./Context/TransactionState";
 
 let logoutTimer;
 const App = () => {
-  const [token, setToken] = useState(false);
-  const [expirationDate, setExpirationDate] = useState(false);
   const [userId, setUserId] = useState(false);
+  const [token, setToken] = useState(false);
+  const [monthlylimit, setMonthlyLimit] = useState(false);
+  const [expirationDate, setExpirationDate] = useState(false);
 
 
-  const login = useCallback((uid, token, texpirationDate) => {
-    setToken(token);
+  const login = useCallback((uid, token,  monthlylimit, texpirationDate) => {
     setUserId(uid);
+    setToken(token);
+    setMonthlyLimit(monthlylimit);
     const tokenExpiration = texpirationDate || new Date(new Date().getTime()+ 1000*60*60) //1000*60*60 converts to one hour after current time
     setExpirationDate(tokenExpiration);
     localStorage.setItem('userData', 
-    JSON.stringify({userId: uid, token: token, expiration: tokenExpiration.toISOString() }))
+    JSON.stringify({userId: uid, token: token, monthlylimit: monthlylimit, expiration: tokenExpiration.toISOString()}))
   }, []);
 
   const logout = useCallback(() => {
     setToken(null);
     setExpirationDate(null);
     setUserId(null);
+    setMonthlyLimit(null);
     localStorage.removeItem('userData');
   }, []);
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'));
     if(storedData && storedData.token && new Date(storedData.expiration) > new Date()){
-      login(storedData.userId, storedData.token, new Date(storedData.expiration));
+      login(storedData.userId, storedData.token, storedData.monthlylimit, new Date(storedData.expiration));
     }
   }, [login]);
 
@@ -97,7 +100,7 @@ const App = () => {
   }
   // Double ! on token converts it to boolean, return's token truthy value
   return (
-    <AuthContext.Provider value={{isLoggedIn: !!token, token: token, userId: userId, login:login, logout: logout}}>
+    <AuthContext.Provider value={{isLoggedIn: !!token, token: token, userId: userId, monthlylimit: monthlylimit, login:login, logout: logout}}>
       <SnackbarProvider maxSnack={3} preventDuplicate>
       <TransactionProvider>
       <Router>

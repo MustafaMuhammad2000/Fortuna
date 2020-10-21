@@ -78,7 +78,6 @@ export const Login = () => {
                 password: password
               })
             });
-
             const responseData = await response.json();
             if(!response.ok){
               throw new Error(responseData.message);
@@ -91,7 +90,7 @@ export const Login = () => {
               variant: 'success',
               autoHideDuration: 2000,
             });
-            auth.login(responseData.userId, responseData.token);
+            auth.login(responseData.userId, responseData.token, responseData.monthlylimit);
         } catch (error) {
             enqueueSnackbar(error.message, {
               variant: 'error',

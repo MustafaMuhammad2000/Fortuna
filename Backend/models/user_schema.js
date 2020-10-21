@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     name: { type: String, required: true, unique: true },
     password: { type: String, required: true},
+    monthlylimit: {type: Number, required: true},
     transactions: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Transactions'}]
 });
 

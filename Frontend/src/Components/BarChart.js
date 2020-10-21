@@ -23,7 +23,7 @@ export const BarCh = () => {
 
     const sumAmounts = context.transactions.map(mapper).reduce(reducer,[]);
     sumAmounts.sort((a,b) => a.yearmonth > b.yearmonth ? 1: -1);
-
+    console.log(sumAmounts);  
 
 
     return (

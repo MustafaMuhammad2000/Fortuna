@@ -45,6 +45,7 @@ export const Register = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmpassword, setConfirmPassword] = useState("")
+    const [monthlylimit, setMonthlylimit] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [displayErrors, setdisplayErrors] = useState(false);
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -70,6 +71,15 @@ export const Register = () => {
             });
             return
         }
+        if(monthlylimit < 0){
+          setdisplayErrors(true);
+          setMonthlylimit("");
+          enqueueSnackbar('Invalid expenditure goal', {
+            variant: 'error',
+            autoHideDuration: 2000,
+          });
+          return;
+        }
         try{
           const response = await fetch('http://localhost:5000/api/users/signup', {
             method: 'POST',
@@ -78,7 +88,8 @@ export const Register = () => {
             },
             body: JSON.stringify({
               name: username,
-              password: password
+              password: password,
+              monthlylimit: monthlylimit
             })
           });
 
@@ -90,12 +101,13 @@ export const Register = () => {
           setUsername("");
           setPassword("");
           setConfirmPassword("")
+          setMonthlylimit("");
           setdisplayErrors(false);
           enqueueSnackbar(responseData.message, {
             variant: 'success',
             autoHideDuration: 2000,
           });
-          auth.login(responseData.userId, responseData.token);
+          auth.login(responseData.userId, responseData.token, responseData.monthlylimit);
         } catch (error) {
           enqueueSnackbar(error.message, {
             variant: 'error',
@@ -163,6 +175,18 @@ export const Register = () => {
                 </IconButton>
               </InputAdornment>
             }
+          />
+        </FormControl>
+        <FormControl required error={displayErrors} className={clsx(classes.margin)} variant="filled">
+          <InputLabel htmlFor="filled-adornment-limit">Monthly Expenditure Goal</InputLabel>
+          <FilledInput
+            id="filled-adornment-limit"
+            label="number"
+            type="number"
+            className={classes.textField}
+            value={monthlylimit}
+            onChange={(e) => setMonthlylimit(e.target.value)}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
           />
         </FormControl>
         <FormControl fullWidth className={clsx(classes.margin)} >

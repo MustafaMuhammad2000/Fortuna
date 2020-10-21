@@ -120,6 +120,42 @@ const deleteTransaction = async (req,res,next) => {
     res.status(200).json({ message: 'Deleted Transaction.' });  
 };
 
+const updateLimit = async (req,res,next) =>{
+  const monthlylimit  = req.body.monthlylimit;
+
+  let user;
+  try {
+    user = await User.findById(req.userData.userId);
+  } catch (err) {
+    const error = new HttpError('Find by ID did not work, please try again', 500);
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError('Could not find user', 404);
+    return next(error);
+  }
+
+  if(user.id != req.userData.userId){
+    const error = new HttpError('Authorization failed, could not update monthly limit.', 401);
+    return next(error);
+  }
+
+  user.monthlylimit = monthlylimit
+  try {
+    await user.save();
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError(
+      'Updating limit failed, please try again.',
+      500
+    );
+    return next(error);
+  };
+  res.status(201).json({ message: 'Added Transaction' });
+};
+
 exports.getTransactions = getTransactions;
 exports.deleteTransaction = deleteTransaction;
 exports.addTransactions = addTransaction;
+exports.updateLimit = updateLimit;

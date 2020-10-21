@@ -53,7 +53,7 @@ export const AddTransaction = () => {
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
-  const [displayErrors, setdisplayErrors] = useState();
+  const [displayErrors, setdisplayErrors] = useState(false);
   const { addTransaction } = useContext(TransactionContext);
 
 
@@ -141,8 +141,6 @@ export const AddTransaction = () => {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
-            // inputProps={{style: {fontSize: 23.5}}} // font size of input text
-            // InputLabelProps={{style: {fontSize: 23.5}}} // font size of input label
           />
           <FormHelperText id="description-helper-text">E.g 17.32</FormHelperText>
       </FormControl>

@@ -5,7 +5,7 @@ const HttpError = require('../models/http-error');
 const User = require('../models/user_schema');
 
 const signup = async (req, res, next) => {
-    const { name , password } = req.body;
+    const { name , password , monthlylimit} = req.body;
   
     let existingUser
     try {
@@ -36,6 +36,7 @@ const signup = async (req, res, next) => {
     const createdUser = new User({
       name,
       password: hashedPassword,
+      monthlylimit,
       transactions: []
     });
   
@@ -63,7 +64,7 @@ const signup = async (req, res, next) => {
       );
       return next(error);
     }
-    res.status(201).json({message: "Sign up was succesful", userId: createdUser.id, token: token});
+    res.status(201).json({message: "Sign up was succesful", userId: createdUser.id, token: token, monthlylimit: monthlylimit});
   };
 
   const login = async (req, res, next) => {
@@ -119,7 +120,7 @@ const signup = async (req, res, next) => {
       );
       return next(error);
     }
-    res.json({message: 'Logged in!', userId: existingUser.id, token: token});
+    res.json({message: 'Logged in!', userId: existingUser.id, token: token, monthlylimit: existingUser.monthlylimit});
   };
 
   exports.signup = signup;

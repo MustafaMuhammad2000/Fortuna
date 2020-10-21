@@ -9,6 +9,7 @@ router.use(checkAuth);
 router.get('/all', transactionControllers.getTransactions);
 router.post('/',transactionControllers.addTransactions);
 router.delete('/', transactionControllers.deleteTransaction);
+router.patch('/limit', transactionControllers.updateLimit);
 
 
 module.exports = router;
