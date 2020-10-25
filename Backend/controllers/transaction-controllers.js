@@ -152,7 +152,7 @@ const updateLimit = async (req,res,next) =>{
     );
     return next(error);
   };
-  res.status(201).json({ message: 'Added Transaction' });
+  res.status(201).json({ message: 'Updated Monthly Goal' });
 };
 
 exports.getTransactions = getTransactions;

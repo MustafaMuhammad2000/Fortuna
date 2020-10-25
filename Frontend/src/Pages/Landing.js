@@ -1,12 +1,12 @@
 import React from "react";
 
-import { Title } from "../Components/Title";
+import { About } from "../Components/About";
 
 export const Landing = () => {
   return (
     <React.Fragment>
-       <div className="test">
-          <Title />
+       <div className="alignment">
+         <About />
       </div>
     </React.Fragment>
   );

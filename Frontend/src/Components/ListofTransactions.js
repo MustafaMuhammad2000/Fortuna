@@ -2,41 +2,49 @@ import React, { useContext, useEffect, useState } from "react";
 import { DataGrid } from '@material-ui/data-grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import moment from 'moment';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { TransactionContext } from "../Context/TransactionState";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     '& .header': {
-      backgroundColor: 'rgba(66, 245, 117)',
+      backgroundColor: '#77DD77',
     },
     '& .header2': {
-      backgroundColor: 'rgba(66, 194, 245)',
+      backgroundColor: '#FDFD98',
     },
     '& .header3': {
-      backgroundColor: 'rgba(245, 173, 66)',
+      backgroundColor: '#E1CEC9',
     },
     '& .header4': {
-      backgroundColor: 'rgba(245, 66, 147)',
+      backgroundColor: '#B29DD9',
     },
   },
-});
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+}));
 
 
 export const ListofTransactions = () => {
   const {transactions, deleteTransaction, getTransactions} = useContext(TransactionContext);
   const [selectRows, setSelectedRows] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const classes = useStyles();
   let i
   for(i = 0; i<transactions.length; i++){
     transactions[i].date = transactions[i].date.slice(0,10);
   }
   useEffect(() => {
+    setLoading(true);
     getTransactions();
+    setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(transactions);
   const handleRowSelection = (selection) =>{
     setSelectedRows(selection.rows);
   }
@@ -47,16 +55,21 @@ export const ListofTransactions = () => {
       return;
     }
     let index = 0;
+    setLoading(true);
     for(index; index<selectRows.length; index++){
       await deleteTransaction(selectRows[index].id);
     }
+    setLoading(false);
   }
   return (
     <React.Fragment>
-      <h3>Expense History</h3>
-      <div style={{height: 325, width: '70%'}} className={classes.root}>
+      <h3 className="underline" >Expense History</h3>
+      <Backdrop className={classes.backdrop} open={loading}>
+          <CircularProgress color="inherit" />
+      </Backdrop>
+      <div style={{height: 425, width: '60%'}} className={classes.root}>
         <DataGrid
-        columns={[ { field: 'category', width:185, headerClassName: 'header' }, { field: 'description', width:200,  headerClassName: 'header2' }, { field: 'amount', width:100, headerClassName: 'header3' }, { field: 'date', type: "date", width:300, headerClassName: 'header4' }]}
+        columns={[ { field: 'category', width:185, headerClassName: 'header' }, { field: 'description', width:200,  headerClassName: 'header2' }, { field: 'amount', width:100, headerClassName: 'header3' }, { field: 'date', type: "date", width:200, headerClassName: 'header4' }]}
         rows={
               transactions
           }

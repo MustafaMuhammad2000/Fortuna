@@ -6,7 +6,7 @@ import { AddTransaction } from "../Components/AddTransaction";
 export const Transactions = () => {
   return (
     <React.Fragment>
-        <div className="test">
+        <div className="alignment">
         <OverallExpenses />
         <ListofTransactions />
         <AddTransaction />

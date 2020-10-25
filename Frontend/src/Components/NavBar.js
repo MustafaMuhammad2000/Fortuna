@@ -28,7 +28,12 @@ export const NavBar = () => {
       <div className={classes.root}>
         <AppBar position="static" style={{background: '#00cb98'}}>
           <Toolbar>
-            <Link to="/" style={{color: 'white', textDecoration: 'none'}}>Fortuna</Link>
+            {!auth.isLoggedIn &&
+            (<Link to="/" style={{color: 'white', textDecoration: 'none'}}>About Fortuna</Link>)
+            }
+            {auth.isLoggedIn &&
+              <h3 style={{color: 'white', fontWeight:"normal"}}>Welcome {auth.name}!</h3>
+            }
             <section className={classes.rightToolbar}>
                 {!auth.isLoggedIn &&
                 (

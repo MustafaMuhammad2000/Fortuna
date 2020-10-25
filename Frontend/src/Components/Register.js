@@ -10,9 +10,11 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import {AuthContext} from '../Context/auth-context'
-import { TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +38,11 @@ const useStyles = makeStyles((theme) => ({
     height: 48,
     padding: '0 30px',
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-  }
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
 }));
 
 export const Register = () => {
@@ -48,7 +54,8 @@ export const Register = () => {
     const [monthlylimit, setMonthlylimit] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [displayErrors, setdisplayErrors] = useState(false);
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const [loading, setLoading] = useState(false);
+    const { enqueueSnackbar } = useSnackbar();
 
     
     const handleClickShowPassword = () => {
@@ -60,6 +67,14 @@ export const Register = () => {
         if (!e.target.checkValidity()) {
           setdisplayErrors(true);
           return;
+        }
+        if(password.length < 5 ){
+          setPassword("");
+          enqueueSnackbar('Password must be at least 5 characters', {
+            variant: 'error',
+            autoHideDuration: 2000,
+          });
+          return
         }
         if(password !== confirmpassword){
             setdisplayErrors(true)
@@ -81,6 +96,7 @@ export const Register = () => {
           return;
         }
         try{
+          setLoading(true);
           const response = await fetch('http://localhost:5000/api/users/signup', {
             method: 'POST',
             headers: {
@@ -103,12 +119,14 @@ export const Register = () => {
           setConfirmPassword("")
           setMonthlylimit("");
           setdisplayErrors(false);
+          setLoading(false);
           enqueueSnackbar(responseData.message, {
             variant: 'success',
             autoHideDuration: 2000,
           });
-          auth.login(responseData.userId, responseData.token, responseData.monthlylimit);
+          auth.login(responseData.userId, responseData.token, responseData.monthlylimit, responseData.name);
         } catch (error) {
+          setLoading(false);
           enqueueSnackbar(error.message, {
             variant: 'error',
             autoHideDuration: 2000,
@@ -116,10 +134,12 @@ export const Register = () => {
           console.log(error);
         }
       };
-
     return (
         <React.Fragment>
         <h3>Make an account to record purchases</h3>
+        <Backdrop className={classes.backdrop} open={loading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <form
         className={classes.root}
         noValidate
@@ -133,7 +153,7 @@ export const Register = () => {
             id="filled-adornment-username"
             className={classes.textField}
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value.trim())}
           />
         </FormControl>
         <FormControl required error={displayErrors} className={clsx(classes.margin)} variant="filled">
@@ -143,7 +163,7 @@ export const Register = () => {
             className={classes.textField}
             type={showPassword ? 'text' : 'password'}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value.trim())}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -156,6 +176,7 @@ export const Register = () => {
               </InputAdornment>
             }
           />
+        <FormHelperText>Password must be at least 5 characters</FormHelperText> 
         </FormControl>
         <FormControl required error={displayErrors} className={clsx(classes.margin, classes.textField)} variant="filled">
           <InputLabel htmlFor="filled-adornment-confirmpassword">Confirm Password</InputLabel>
@@ -163,7 +184,7 @@ export const Register = () => {
             id="filled-adornment-confirmpassword"
             type={showPassword ? 'text' : 'password'}
             value={confirmpassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => setConfirmPassword(e.target.value.trim())}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -175,7 +196,7 @@ export const Register = () => {
                 </IconButton>
               </InputAdornment>
             }
-          />
+          /> 
         </FormControl>
         <FormControl required error={displayErrors} className={clsx(classes.margin)} variant="filled">
           <InputLabel htmlFor="filled-adornment-limit">Monthly Expenditure Goal</InputLabel>

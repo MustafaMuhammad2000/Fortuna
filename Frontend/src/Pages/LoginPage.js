@@ -5,7 +5,7 @@ import {Login} from '../Components/Login'
 export const LoginPage = () => {
     return (
         <React.Fragment>
-            <div className="test">
+            <div className="alignment">
             <Login />
             </div>
         </React.Fragment>  

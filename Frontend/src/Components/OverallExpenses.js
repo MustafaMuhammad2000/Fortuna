@@ -12,7 +12,7 @@ export const OverallExpenses = () => {
     <React.Fragment>
       <h4>Your Total Expenditure:</h4>
       <div className="inc-exp-container">
-        <h1>${total}</h1>
+        <h1 className="h1v1">${total}</h1>
       </div>
     </React.Fragment>
   );

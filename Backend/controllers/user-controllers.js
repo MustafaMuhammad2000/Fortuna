@@ -64,7 +64,7 @@ const signup = async (req, res, next) => {
       );
       return next(error);
     }
-    res.status(201).json({message: "Sign up was succesful", userId: createdUser.id, token: token, monthlylimit: monthlylimit});
+    res.status(201).json({message: "Sign up was successful", userId: createdUser.id, token: token, monthlylimit: monthlylimit, name:name});
   };
 
   const login = async (req, res, next) => {
@@ -120,7 +120,7 @@ const signup = async (req, res, next) => {
       );
       return next(error);
     }
-    res.json({message: 'Logged in!', userId: existingUser.id, token: token, monthlylimit: existingUser.monthlylimit});
+    res.json({message: 'Logged in!', userId: existingUser.id, token: token, monthlylimit: existingUser.monthlylimit, name: existingUser.name});
   };
 
   exports.signup = signup;

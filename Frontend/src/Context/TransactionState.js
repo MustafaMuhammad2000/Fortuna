@@ -13,7 +13,7 @@ export const TransactionContext = createContext(initialState);
 
 //Provider, wraps around all of app.js so children component can access context
 export const TransactionProvider = ({ children }) => {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar  } = useSnackbar();
   const auth = useContext(AuthContext);
   const [state, dispatch] = useReducer(TransactionReducer, initialState);
 
