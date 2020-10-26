@@ -1,8 +1,8 @@
 {
     "env":{
-        "DB_USER": "FakeUser",
-        "DB_PASSWORD":"FakePassword",
-        "DB_NAME":"FakeName",
-        "JWT_KEY":"FakeKey"
+        "DB_USER": "minotaurman",
+        "DB_PASSWORD":"spongebob20",
+        "DB_NAME":"mern",
+        "JWT_KEY":"big_secret_do_not_share"
     }
 }

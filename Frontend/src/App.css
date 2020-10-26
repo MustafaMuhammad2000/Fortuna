@@ -108,3 +108,18 @@ h4 {
   color: #505050;
   font-size: 40px;
 }
+
+.Bottom{
+  flex-grow: 1; 
+  margin-top: 100px;
+  bottom: 10px;
+}
+.Right{
+  position: absolute;
+  right: 20px;
+}
+
+.Contact{
+  font-weight: normal;
+  font-size: medium;
+}

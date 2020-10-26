@@ -10,12 +10,13 @@ import { SnackbarProvider } from 'notistack';
 
 import { NavBar } from "./Components/NavBar";
 import { Landing } from "./Pages/Landing";
+import { ContactMe } from "./Components/ContactMe"
 import { Transactions } from "./Pages/Transactions";
 import { LoginPage } from "./Pages/LoginPage"
 import { ReportPage } from "./Pages/ReportPage"
 import { MonthPage } from "./Pages/MonthPage"
 import { RegisterPage} from "./Pages/RegisterPage"
-import {AuthContext} from './Context/auth-context'
+import { AuthContext } from './Context/auth-context'
 import { TransactionProvider } from "./Context/TransactionState";
 
 let logoutTimer;
@@ -108,6 +109,7 @@ const App = () => {
         <Switch>
           {routes}
         </Switch> 
+        <ContactMe />
       </Router>
      </TransactionProvider>
      </SnackbarProvider>
