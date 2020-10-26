@@ -1,8 +1,8 @@
 {
     "env":{
-        "DB_USER": "minotaurman",
-        "DB_PASSWORD":"spongebob20",
-        "DB_NAME":"mern",
-        "JWT_KEY":"big_secret_do_not_share"
+        "DB_USER": "Test",
+        "DB_PASSWORD":"Test",
+        "DB_NAME":"Test",
+        "JWT_KEY":"Test"
     }
 }
