@@ -76,7 +76,7 @@ export const Login = () => {
 
         try{
             setLoading(true);
-            const response = await fetch('http://localhost:5000/api/users/login', {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/users/login', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'

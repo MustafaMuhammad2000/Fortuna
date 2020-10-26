@@ -53,7 +53,7 @@ export const LimitUpdate = () => {
         }
         try{
             setLoading(true);
-            const response = await fetch('http://localhost:5000/api/transactions/limit', {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/transactions/limit', {
               method: 'PATCH',
               headers: {
                 'Content-Type': 'application/json',

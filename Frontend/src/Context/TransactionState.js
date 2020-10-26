@@ -21,7 +21,7 @@ export const TransactionProvider = ({ children }) => {
 
   async function getTransactions(){
     try{
-      const response = await fetch('http://localhost:5000/api/transactions/all' , {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/transactions/all' , {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export const TransactionProvider = ({ children }) => {
   }
   async function deleteTransaction(id) {
     try{
-      const response = await fetch('http://localhost:5000/api/transactions/' , {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/transactions/' , {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ export const TransactionProvider = ({ children }) => {
   }
   async function addTransaction(transaction) {
     try{
-      const response = await fetch('http://localhost:5000/api/transactions' , {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/transactions/' , {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

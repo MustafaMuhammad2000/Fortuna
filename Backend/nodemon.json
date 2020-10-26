@@ -1,0 +1,8 @@
+{
+    "env":{
+        "DB_USER": "FakeUser",
+        "DB_PASSWORD":"FakePassword",
+        "DB_NAME":"FakeName",
+        "JWT_KEY":"FakeKey"
+    }
+}

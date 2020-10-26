@@ -54,7 +54,7 @@ const signup = async (req, res, next) => {
     try {
     token = jwt.sign(
       {userId: createdUser.id},
-       'big_secret_do_not_share', //Got to change this when deploying
+       process.env.JWT_KEY, //Got to change this when deploying
        { expiresIn: '1h'}
        );
     } catch (err){
@@ -110,7 +110,7 @@ const signup = async (req, res, next) => {
     try {
     token = jwt.sign(
       {userId: existingUser.id},
-       'big_secret_do_not_share', //Got to change this when deploying
+       process.env.JWT_KEY, //Got to change this when deploying
        { expiresIn: '1h'}
        );
     } catch (err){

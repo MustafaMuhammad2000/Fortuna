@@ -35,7 +35,7 @@ app.use((error, req, res, next) => {
     res.json({message: error.message || 'An unknown error occurred!'});
 });
 
-mongoose.connect("mongodb+srv://<user>:<password>@fortuna.puonu.mongodb.net/mern?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@fortuna.puonu.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
         .then(() => {
             console.log("Connected to database succesfully!")
             app.listen(5000);
